@@ -75,7 +75,7 @@ async function seed() {
     await mongoose.connect(process.env.MONGODB_URI!);
     console.log('Connected to MongoDB');
 
-    // Clear existing test data (optional, uncomment if you want to reset
+    // Clear existing test data (optional, uncomment if you want to reset)
     // await User.deleteMany({});
     // await Profile.deleteMany({});
     // await Student.deleteMany({});
@@ -140,7 +140,7 @@ async function seed() {
           status: 'active',
           lastAttendance: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000)
         });
-        const sampleProfile = await Profile.create({ userId: sampleUser._id, phone: '(11) 99999-9999 });
+        const sampleProfile = await Profile.create({ userId: sampleUser._id, phone: '(11) 99999-9999' });
         const now = new Date();
         const endDate = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000);
         await Subscription.create({
