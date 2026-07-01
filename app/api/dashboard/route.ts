@@ -89,7 +89,7 @@ export async function GET() {
     }).populate('studentId').populate('planId').limit(10);
 
     // Birthday this month
-    const birthdayStudents = []; // We'll add this when Profile schema has birthDate
+    const birthdayStudents: Array<{ id: string; name: string }> = []; // We'll add this when Profile schema has birthDate
 
     return NextResponse.json({
       metrics: {
