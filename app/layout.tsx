@@ -3,8 +3,8 @@ import "./globals.css";
 import { Providers } from "./providers";
 
 export const metadata: Metadata = {
-  title: "Evolveacademy - Sistema de Gestão de Academias",
-  description: "Sistema completo de gestão para academias",
+  title: "Evolveacademy - Plataforma de Cursos da EvolveTech Solutions",
+  description: "Cursos online práticos da EvolveTech Solutions, começando pelo Curso de Marketing: do Zero ao Avançado.",
 };
 
 export default function RootLayout({

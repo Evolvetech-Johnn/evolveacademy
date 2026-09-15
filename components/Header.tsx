@@ -20,6 +20,9 @@ export default function Header() {
             </Link>
           </motion.div>
           <motion.div variants={itemVariants} className="flex items-center gap-6">
+            <Link href="/cursos/marketing" className="text-text hover:text-base font-medium transition-colors hidden sm:inline">
+              Cursos
+            </Link>
             <Link href="/login" className="text-text hover:text-base font-medium transition-colors">
               Entrar
             </Link>

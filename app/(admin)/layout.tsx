@@ -2,17 +2,13 @@
 
 import { ReactNode } from 'react';
 import { useSession, signOut } from 'next-auth/react';
-import { redirect } from 'next/navigation';
+import { redirect, usePathname } from 'next/navigation';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 
 const navItems = [
-  { label: 'Dashboard', href: '/admin/dashboard', icon: 'home' },
-  { label: 'Leads', href: '/admin/leads', icon: 'leads' },
-  { label: 'Alunos', href: '/admin/students', icon: 'users' },
-  { label: 'Treinos', href: '/admin/programs', icon: 'dumbbell' },
-  { label: 'Planos', href: '/admin/plans', icon: 'credit-card' },
-  { label: 'Configurações', href: '/admin/settings', icon: 'settings' },
+  { label: 'Dashboard', href: '/dashboard', icon: 'home' },
+  { label: 'Cursos', href: '/cursos-admin', icon: 'book' },
+  { label: 'Configurações', href: '/settings', icon: 'settings' },
 ];
 
 const icons = {
@@ -21,24 +17,9 @@ const icons = {
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
     </svg>
   ),
-  leads: (
+  book: (
     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-    </svg>
-  ),
-  users: (
-    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-    </svg>
-  ),
-  dumbbell: (
-    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-    </svg>
-  ),
-  'credit-card': (
-    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
     </svg>
   ),
   settings: (
@@ -56,7 +37,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
   if (status === 'loading') {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-accent-primary"></div>
       </div>
     );
   }
@@ -66,17 +47,17 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-gray-50">
       <div className="flex h-screen">
-        <aside className="w-64 bg-white border-r border-slate-200 flex flex-col">
-          <div className="p-6 border-b border-slate-200">
+        <aside className="w-64 bg-surface border-r border-gray-100 flex flex-col">
+          <div className="p-6 border-b border-gray-100">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-primary-600 rounded-xl flex items-center justify-center">
+              <div className="w-10 h-10 bg-accent-primary rounded-xl flex items-center justify-center">
                 <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                 </svg>
               </div>
-              <span className="font-bold text-xl text-slate-900">Evolveacademy</span>
+              <span className="font-bold text-xl text-base">Evolveacademy</span>
             </div>
           </div>
 
@@ -89,8 +70,8 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
                   href={item.href}
                   className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
                     isActive
-                      ? 'bg-primary-50 text-primary-700 font-medium'
-                      : 'text-slate-600 hover:bg-slate-50'
+                      ? 'bg-accent-primary/10 text-accent-primary font-medium'
+                      : 'text-text hover:bg-gray-50'
                   }`}
                 >
                   {icons[item.icon as keyof typeof icons]}
@@ -100,17 +81,17 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
             })}
           </nav>
 
-          <div className="p-4 border-t border-slate-200">
+          <div className="p-4 border-t border-gray-100">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-slate-200 rounded-full flex items-center justify-center">
-                  <span className="text-slate-600 font-medium">
+                <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
+                  <span className="text-text font-medium">
                     {session.user.name.charAt(0).toUpperCase()}
                   </span>
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-slate-900">{session.user.name}</p>
-                  <p className="text-xs text-slate-500">
+                  <p className="text-sm font-medium text-base">{session.user.name}</p>
+                  <p className="text-xs text-text">
                     {session.user.role === 'owner' ? 'Dono' : 'Professor'}
                   </p>
                 </div>
@@ -118,7 +99,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
             </div>
             <button
               onClick={() => signOut()}
-              className="w-full flex items-center justify-center gap-2 px-4 py-2 text-sm text-slate-600 hover:bg-slate-50 rounded-lg transition-colors"
+              className="w-full flex items-center justify-center gap-2 px-4 py-2 text-sm text-text hover:bg-gray-50 rounded-lg transition-colors"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />

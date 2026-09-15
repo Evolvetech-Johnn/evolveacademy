@@ -1,6 +1,6 @@
-# Evolveacademy - Sistema de Gestão de Academias
+# Evolveacademy
 
-Sistema completo de gestão para academias, com área do dono/professor e área do aluno.
+Plataforma de cursos online da **EvolveTech Solutions**. O primeiro curso publicado é o **Curso de Marketing: do Zero ao Avançado** (7 módulos, 43 aulas), com conteúdo em [docs/curso-marketing.md](docs/curso-marketing.md).
 
 ## Tech Stack
 
@@ -11,7 +11,7 @@ Sistema completo de gestão para academias, com área do dono/professor e área 
 - **File Storage**: Cloudinary
 - **Auth**: NextAuth.js (Credentials Provider)
 - **Forms**: React Hook Form + Zod
-- **Hosting**: Render
+- **Hosting**: Vercel
 
 ## Primeiros Passos
 
@@ -39,17 +39,14 @@ CLOUDINARY_API_SECRET=sua-api-secret
 npm install
 ```
 
-### 3. Criar usuário administrador inicial
+### 3. Popular o banco
 
 ```bash
-npm run seed
+npm run seed        # cria o usuário admin (admin@evolveacademy.com / admin123)
+npm run seed:course  # popula o Curso de Marketing a partir de docs/curso-marketing.md
 ```
 
-Isso criará um usuário com:
-- Email: `admin@evolveacademy.com`
-- Senha: `admin123`
-
-⚠️ **Altere a senha imediatamente após o primeiro login!**
+⚠️ **Altere a senha do admin imediatamente após o primeiro login!**
 
 ### 4. Iniciar o servidor de desenvolvimento
 
@@ -59,86 +56,67 @@ npm run dev
 
 Acesse [http://localhost:3000](http://localhost:3000)
 
-## Funcionalidades Implementadas
+## Funcionalidades
 
 ### Autenticação
-- Login com email e senha
-- Roles: Dono, Professor, Aluno
+- Login com email e senha (NextAuth, Credentials Provider)
+- Roles: `owner`, `professor`, `student`
 - Proteção de rotas por role
 
-### Módulo 1 - Cadastro e CRM de Alunos
-- Listagem de alunos
-- Cadastro de novo aluno completo
-  - Dados pessoais
-  - Foto (upload para Cloudinary)
-  - Contato de emergência
-- Ficha de Saúde (Anamnese)
-  - Comorbidades
-  - Medicações controladas
-  - Restrições físicas
-  - Lesões
-  - Consentimento LGPD
+### Cursos
+- `/` — home institucional com cursos em destaque
+- `/cursos/marketing` — landing de vendas do curso
+- `/cursos/marketing/aulas/[slug]` — aula (a primeira é liberada sem login como isca; as demais exigem login)
+- `/meus-cursos` — área do aluno logado, lista todos os módulos/aulas do curso
+- `/dashboard`, `/cursos-admin`, `/settings` — painel administrativo (`owner`/`professor`)
+
+Conteúdo de curso é modelado em `Course` → `Module` → `Lesson` (ver `lib/db/models/`). Cada aula segue uma estrutura fixa: objetivo, conceito central, aprofundamento tático, exemplo prático, contraexemplo, erro comum, exercício de fixação e "para ir além" — populada pelo parser em `scripts/seedCourseMarketing.ts`.
+
+**Pagamento ainda não está integrado.** Enquanto isso, qualquer usuário autenticado que abre uma aula recebe matrícula (`Enrollment`) automática — ver o comentário `ponytail:` em `lib/courses.ts`.
 
 ## Estrutura do Projeto
 
 ```
 evolveacademy/
 ├── app/
-│   ├── (admin)/          # Área administrativa (Dono/Professor)
+│   ├── (admin)/          # Painel administrativo (Dono/Professor)
 │   │   ├── dashboard/
-│   │   ├── students/
-│   │   ├── programs/
-│   │   ├── plans/
+│   │   ├── cursos-admin/
 │   │   └── settings/
-│   ├── (auth)/           # Rotas de autenticação
-│   │   └── login/
-│   ├── api/              # API Routes
-│   │   ├── auth/
-│   │   ├── students/
-│   │   └── upload/
+│   ├── (student)/        # Área do aluno logado
+│   │   └── meus-cursos/
+│   ├── cursos/
+│   │   └── marketing/    # Landing + aulas do curso
+│   ├── login/
+│   ├── api/              # API Routes (auth, dashboard, upload)
 │   ├── globals.css
 │   ├── layout.tsx
-│   ├── page.tsx
+│   ├── page.tsx           # Home institucional
 │   └── providers.tsx
 ├── lib/
-│   ├── auth/
-│   │   └── options.ts    # Configuração do NextAuth
+│   ├── auth/options.ts    # Configuração do NextAuth
+│   ├── courses.ts         # Leitura de curso/aula + matrícula automática
 │   ├── db/
-│   │   ├── models/       # Schemas Mongoose
-│   │   └── mongoose.ts   # Conexão com MongoDB
-│   └── cloudinary.ts     # Configuração do Cloudinary
+│   │   ├── models/        # Schemas Mongoose (User, Profile, Course, Module, Lesson, Enrollment)
+│   │   └── mongoose.ts    # Conexão com MongoDB
+│   └── cloudinary.ts
+├── docs/
+│   └── curso-marketing.md # Conteúdo-fonte do primeiro curso
 ├── scripts/
-│   └── seed.ts           # Script para criar usuário admin
-├── types/                # Tipos TypeScript
-├── package.json
-└── ...
+│   ├── seed.ts             # Cria o usuário admin
+│   └── seedCourseMarketing.ts  # Parseia o .md e popula o curso
+├── types/
+└── package.json
 ```
-
-## Cursos (infoprodutos)
-
-Split 1 da plataforma de cursos: o conteúdo de [docs/curso-marketing.md](docs/curso-marketing.md) é populado no Mongo com:
-
-```bash
-npm run seed:course
-```
-
-Isso cria o Course/Module/Lesson do "Curso de Marketing: do Zero ao Avançado" (7 módulos, 43 aulas). Rotas:
-- `/cursos/marketing` — landing de vendas
-- `/cursos/marketing/aulas/[slug]` — aula (1ª aula liberada sem login; demais exigem login)
-- `/meus-cursos` — área do aluno logado
-
-Pagamento ainda não está integrado (auto-enrollment liberado para qualquer usuário logado) — ver `lib/courses.ts`.
 
 ## Deploy na Vercel
 
 Configurar no dashboard da Vercel as mesmas env vars do `.env.local`: `MONGODB_URI`, `NEXTAUTH_URL` (URL de produção), `NEXTAUTH_SECRET`, `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET`. Rodar `npm run build` localmente antes do deploy para garantir que compila sem erros.
 
-## Próximos Passos
+## Roadmap
 
-- [ ] Checkout/pagamento do curso (Split 2)
-- [ ] Multi-curso, progresso do aluno, certificado (Split 3)
-- [ ] Programas de Treino
-- [ ] Biblioteca de Exercícios
-- [ ] Acompanhamento de Evolução
-- [ ] Financeiro
-- [ ] Planos
+- [x] Split 1 — Motor de cursos + Curso de Marketing publicado
+- [x] Split "pivot" — remoção do sistema de gestão de academia, rebrand completo para plataforma de cursos
+- [ ] Split 2 — Checkout/pagamento (Mercado Pago ou Stripe, Pix), liberação automática de acesso
+- [ ] Split 3 — Multi-curso, progresso do aluno, certificado
+- [ ] Split 4 — SEO, analytics e growth sobre o catálogo de cursos

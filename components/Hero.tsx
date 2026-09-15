@@ -17,30 +17,30 @@ export default function Hero() {
         >
           <motion.div variants={itemVariants} className="mb-4">
             <span className="inline-block px-3 py-1 bg-accent-primary/10 text-accent-primary rounded-full text-sm font-medium">
-              Sistema de gestão completo
+              Plataforma de cursos da EvolveTech Solutions
             </span>
           </motion.div>
           <motion.h1 variants={itemVariants} className="text-4xl md:text-5xl lg:text-6xl font-bold text-base mb-6 leading-tight">
-            Organize sua academia com simplicidade.
+            Aprenda com quem aplica isso todo dia em negócios de verdade.
           </motion.h1>
           <motion.p variants={itemVariants} className="text-lg md:text-xl text-text mb-8 max-w-2xl">
-            Gerencie alunos, planos, pagamentos e relatórios em um único lugar. Sem complicações, só resultados.
+            Cursos práticos, direto ao ponto, criados pela EvolveTech Solutions para quem quer resultado — não teoria solta.
           </motion.p>
           <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4">
             <motion.div variants={buttonVariants} whileHover="hover" whileTap="tap">
               <Link
-                href="/login"
+                href="/cursos/marketing"
                 className="px-6 py-3.5 bg-accent-primary text-white font-semibold rounded-lg hover:bg-accent-primary/90 transition-colors"
               >
-                Criar conta gratuita
+                Ver curso de Marketing
               </Link>
             </motion.div>
             <motion.div variants={buttonVariants} whileHover="hover" whileTap="tap">
               <a
-                href="#beneficios"
+                href="#cursos"
                 className="px-6 py-3.5 bg-transparent border border-gray-200 text-text font-semibold rounded-lg hover:border-gray-300 transition-colors"
               >
-                Ver funcionalidades
+                Ver todos os cursos
               </a>
             </motion.div>
           </motion.div>
