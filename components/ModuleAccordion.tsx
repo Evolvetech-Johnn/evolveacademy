@@ -50,14 +50,14 @@ export default function ModuleAccordion({ modules }: ModuleAccordionProps) {
               <button
                 type="button"
                 onClick={() => setOpenId(isOpen ? null : mod._id)}
-                className="w-full flex items-center gap-4 p-6 text-left"
+                className="w-full flex items-center gap-3 sm:gap-4 p-4 sm:p-6 text-left"
               >
-                <span className="w-10 h-10 flex-shrink-0 rounded-lg bg-accent-secondary/10 text-accent-secondary font-bold flex items-center justify-center">
+                <span className="w-8 h-8 sm:w-10 sm:h-10 flex-shrink-0 rounded-lg bg-accent-secondary/10 text-accent-secondary text-sm sm:text-base font-bold flex items-center justify-center">
                   {mod.order}
                 </span>
-                <div className="flex-1">
-                  <h3 className="text-xl font-semibold text-base">{mod.title}</h3>
-                  <p className="text-text mt-1">{moduleHooks[mod.order]}</p>
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-lg sm:text-xl font-semibold text-base">{mod.title}</h3>
+                  <p className="text-text text-sm sm:text-base mt-1 hidden sm:block">{moduleHooks[mod.order]}</p>
                 </div>
                 <motion.svg
                   animate={{ rotate: isOpen ? 180 : 0 }}
@@ -78,12 +78,12 @@ export default function ModuleAccordion({ modules }: ModuleAccordionProps) {
                     exit={{ height: 0, opacity: 0 }}
                     transition={{ duration: 0.2 }}
                   >
-                    <ul className="px-6 pb-6 pl-20 space-y-2">
+                    <ul className="px-4 sm:px-6 pb-4 sm:pb-6 pl-6 sm:pl-10 md:pl-20 space-y-3 sm:space-y-2">
                       {mod.lessons.map((lesson) => (
                         <li key={lesson._id}>
                           <Link
                             href={`/cursos/marketing/aulas/${lesson.slug}`}
-                            className="text-text hover:text-accent-secondary transition-colors"
+                            className="text-text hover:text-accent-secondary transition-colors block py-1"
                           >
                             {lesson.title}
                           </Link>

@@ -32,16 +32,16 @@ export default async function LessonPage({ params }: LessonPageProps) {
   return (
     <div className="min-h-screen bg-surface">
       <Header />
-      <main className="max-w-3xl mx-auto px-8 md:px-12 py-16">
+      <main className="max-w-3xl mx-auto px-4 sm:px-6 md:px-12 py-8 sm:py-16">
         <Link href="/cursos/marketing" className="text-accent-secondary font-medium hover:underline">
           ← Voltar para o curso
         </Link>
-        <h1 className="text-3xl md:text-4xl font-bold text-base mt-4 mb-8">{lesson.title}</h1>
+        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-base mt-4 mb-6 sm:mb-8 leading-snug">{lesson.title}</h1>
 
-        <div className="space-y-8">
+        <div className="space-y-6 sm:space-y-8">
           {contentFields.map(({ key, label }) => (
             <div key={key}>
-              <h2 className="text-lg font-semibold text-accent-secondary mb-2">{label}</h2>
+              <h2 className="text-sm sm:text-lg font-semibold text-accent-secondary mb-2">{label}</h2>
               <p className="text-text whitespace-pre-line leading-relaxed">{String(lesson[key])}</p>
             </div>
           ))}

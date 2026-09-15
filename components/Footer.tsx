@@ -7,7 +7,7 @@ import { containerVariants, itemVariants } from '../animations/variants';
 export default function Footer() {
   return (
     <footer className="bg-base text-white pt-16 pb-8">
-      <div className="max-w-6xl mx-auto px-8 md:px-12">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-12">
         <motion.div
           initial="hidden"
           whileInView="visible"
