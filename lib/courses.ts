@@ -1,8 +1,5 @@
-import dbConnect from './db/mongoose';
-import Course, { ICourse } from './db/models/Course';
-import Module, { IModule } from './db/models/Module';
-import Lesson, { ILesson } from './db/models/Lesson';
-import Enrollment from './db/models/Enrollment';
+import { supabase } from './supabase';
+import type { Course, CourseModule, Lesson } from './types';
 
 export interface PlainLesson {
   _id: string;
@@ -20,44 +17,86 @@ export interface PlainModule {
   lessons: PlainLesson[];
 }
 
-function toPlainLesson(lesson: ILesson): PlainLesson {
+export interface LessonDetail {
+  id: string;
+  courseId: string;
+  moduleId: string;
+  order: number;
+  slug: string;
+  title: string;
+  objetivo: string;
+  conceito: string;
+  aprofundamento: string;
+  exemploPratico: string;
+  contraexemplo: string;
+  erroComum: string;
+  exercicio: string;
+  paraIrAlem: string;
+  isFreePreview: boolean;
+}
+
+function toPlainLesson(lesson: Lesson): PlainLesson {
   return {
-    _id: lesson._id.toString(),
-    moduleId: lesson.moduleId.toString(),
-    order: lesson.order,
+    _id: lesson.id,
+    moduleId: lesson.module_id,
+    order: lesson.position,
     slug: lesson.slug,
     title: lesson.title,
-    isFreePreview: lesson.isFreePreview,
+    isFreePreview: lesson.is_free_preview,
+  };
+}
+
+function toLessonDetail(lesson: Lesson): LessonDetail {
+  return {
+    id: lesson.id,
+    courseId: lesson.course_id,
+    moduleId: lesson.module_id,
+    order: lesson.position,
+    slug: lesson.slug,
+    title: lesson.title,
+    objetivo: lesson.objetivo,
+    conceito: lesson.conceito,
+    aprofundamento: lesson.aprofundamento,
+    exemploPratico: lesson.exemplo_pratico,
+    contraexemplo: lesson.contraexemplo,
+    erroComum: lesson.erro_comum,
+    exercicio: lesson.exercicio,
+    paraIrAlem: lesson.para_ir_alem,
+    isFreePreview: lesson.is_free_preview,
   };
 }
 
 export async function getCourseWithModules(courseSlug: string): Promise<{
-  course: ICourse;
+  course: Course;
   modules: PlainModule[];
 } | null> {
-  await dbConnect();
+  const { data: course } = await supabase
+    .from('courses')
+    .select('*')
+    .eq('slug', courseSlug)
+    .eq('is_published', true)
+    .single<Course>();
 
-  const course = await Course.findOne({ slug: courseSlug, isPublished: true });
   if (!course) return null;
 
-  const modules = await Module.find({ courseId: course._id }).sort({ order: 1 });
-  const lessons = await Lesson.find({ courseId: course._id }).sort({ order: 1 });
+  const [{ data: modules }, { data: lessons }] = await Promise.all([
+    supabase.from('modules').select('*').eq('course_id', course.id).order('position').returns<CourseModule[]>(),
+    supabase.from('lessons').select('*').eq('course_id', course.id).order('position').returns<Lesson[]>(),
+  ]);
 
-  const plainModules: PlainModule[] = modules.map((mod) => ({
-    _id: mod._id.toString(),
-    order: mod.order,
+  const plainModules: PlainModule[] = (modules ?? []).map((mod) => ({
+    _id: mod.id,
+    order: mod.position,
     title: mod.title,
-    lessons: lessons
-      .filter((lesson) => lesson.moduleId.toString() === mod._id.toString())
-      .map(toPlainLesson),
+    lessons: (lessons ?? []).filter((lesson) => lesson.module_id === mod.id).map(toPlainLesson),
   }));
 
   return { course, modules: plainModules };
 }
 
-export async function getLessonBySlug(slug: string): Promise<ILesson | null> {
-  await dbConnect();
-  return Lesson.findOne({ slug });
+export async function getLessonBySlug(slug: string): Promise<LessonDetail | null> {
+  const { data: lesson } = await supabase.from('lessons').select('*').eq('slug', slug).single<Lesson>();
+  return lesson ? toLessonDetail(lesson) : null;
 }
 
 /**
@@ -65,16 +104,18 @@ export async function getLessonBySlug(slug: string): Promise<ILesson | null> {
  * checkout entrar no Split 2 — trocar por verificação de pagamento confirmado.
  */
 export async function ensureEnrollment(userId: string, courseId: string): Promise<void> {
-  await dbConnect();
-  await Enrollment.findOneAndUpdate(
-    { userId, courseId },
-    { userId, courseId, status: 'active' },
-    { upsert: true }
-  );
+  await supabase
+    .from('enrollments')
+    .upsert({ user_id: userId, course_id: courseId, status: 'active' }, { onConflict: 'user_id,course_id' });
 }
 
 export async function hasActiveEnrollment(userId: string, courseId: string): Promise<boolean> {
-  await dbConnect();
-  const enrollment = await Enrollment.findOne({ userId, courseId, status: 'active' });
-  return !!enrollment;
+  const { data } = await supabase
+    .from('enrollments')
+    .select('id')
+    .eq('user_id', userId)
+    .eq('course_id', courseId)
+    .eq('status', 'active')
+    .maybeSingle();
+  return !!data;
 }

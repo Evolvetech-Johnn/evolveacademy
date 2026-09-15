@@ -3,8 +3,8 @@ import Hero from '../components/Hero';
 import Benefits from '../components/Benefits';
 import FeaturedCourses from '../components/FeaturedCourses';
 import Footer from '../components/Footer';
-import dbConnect from '../lib/db/mongoose';
-import Course from '../lib/db/models/Course';
+import { supabase } from '../lib/supabase';
+import type { Course } from '../lib/types';
 
 export const dynamic = 'force-dynamic';
 
@@ -38,13 +38,13 @@ const platformBenefits = [
   },
 ];
 
-async function getPublishedCourses() {
-  try {
-    await dbConnect();
-    return await Course.find({ isPublished: true }).select('slug title description').sort({ createdAt: 1 });
-  } catch {
-    return [];
-  }
+async function getPublishedCourses(): Promise<Pick<Course, 'slug' | 'title' | 'description'>[]> {
+  const { data } = await supabase
+    .from('courses')
+    .select('slug, title, description')
+    .eq('is_published', true)
+    .order('created_at');
+  return data ?? [];
 }
 
 export default async function Home() {

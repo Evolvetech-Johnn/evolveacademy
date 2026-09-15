@@ -1,7 +1,8 @@
 import { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import dbConnect from '@/lib/db/mongoose';
-import User from '@/lib/db/models/User';
+import bcrypt from 'bcryptjs';
+import { supabase } from '@/lib/supabase';
+import type { User } from '@/lib/types';
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -16,20 +17,23 @@ export const authOptions: NextAuthOptions = {
           return null;
         }
 
-        await dbConnect();
+        const { data: user } = await supabase
+          .from('users')
+          .select('*')
+          .eq('email', credentials.email)
+          .single<User>();
 
-        const user = await User.findOne({ email: credentials.email });
         if (!user) {
           return null;
         }
 
-        const isPasswordValid = await user.comparePassword(credentials.password);
+        const isPasswordValid = await bcrypt.compare(credentials.password, user.password);
         if (!isPasswordValid) {
           return null;
         }
 
         return {
-          id: user._id.toString(),
+          id: user.id,
           email: user.email,
           name: user.name,
           role: user.role,

@@ -31,8 +31,8 @@ export default async function LessonPage({ params }: LessonPageProps) {
 
   let hasAccess = lesson.isFreePreview;
   if (!hasAccess && session?.user?.id) {
-    await ensureEnrollment(session.user.id, lesson.courseId.toString());
-    hasAccess = await hasActiveEnrollment(session.user.id, lesson.courseId.toString());
+    await ensureEnrollment(session.user.id, lesson.courseId);
+    hasAccess = await hasActiveEnrollment(session.user.id, lesson.courseId);
   }
 
   return (

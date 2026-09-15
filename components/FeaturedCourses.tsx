@@ -1,9 +1,9 @@
 import Link from 'next/link';
 import Section from './Section';
-import type { ICourse } from '../lib/db/models/Course';
+import type { Course } from '../lib/types';
 
 interface FeaturedCoursesProps {
-  courses: Pick<ICourse, 'slug' | 'title' | 'description'>[];
+  courses: Pick<Course, 'slug' | 'title' | 'description'>[];
 }
 
 export default function FeaturedCourses({ courses }: FeaturedCoursesProps) {

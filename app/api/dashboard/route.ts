@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/lib/auth/options';
-import dbConnect from '@/lib/db/mongoose';
-import { Course, Module, Lesson, Enrollment } from '@/lib/db/models';
+import { supabase } from '@/lib/supabase';
+import type { Course } from '@/lib/types';
 
 export async function GET() {
   try {
@@ -11,23 +11,32 @@ export async function GET() {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    await dbConnect();
-
-    const [courseCount, moduleCount, lessonCount, enrollmentCount, courses] = await Promise.all([
-      Course.countDocuments(),
-      Module.countDocuments(),
-      Lesson.countDocuments(),
-      Enrollment.countDocuments({ status: 'active' }),
-      Course.find().sort({ createdAt: -1 }),
+    const [courseCount, moduleCount, lessonCount, enrollmentCount, { data: courses }] = await Promise.all([
+      supabase.from('courses').select('id', { count: 'exact', head: true }).then((r) => r.count ?? 0),
+      supabase.from('modules').select('id', { count: 'exact', head: true }).then((r) => r.count ?? 0),
+      supabase.from('lessons').select('id', { count: 'exact', head: true }).then((r) => r.count ?? 0),
+      supabase
+        .from('enrollments')
+        .select('id', { count: 'exact', head: true })
+        .eq('status', 'active')
+        .then((r) => r.count ?? 0),
+      supabase.from('courses').select('*').order('created_at', { ascending: false }).returns<Course[]>(),
     ]);
 
     const coursesWithEnrollments = await Promise.all(
-      courses.map(async (course) => ({
-        id: course._id.toString(),
+      (courses ?? []).map(async (course) => ({
+        id: course.id,
         title: course.title,
         slug: course.slug,
-        isPublished: course.isPublished,
-        enrollments: await Enrollment.countDocuments({ courseId: course._id, status: 'active' }),
+        isPublished: course.is_published,
+        enrollments:
+          (
+            await supabase
+              .from('enrollments')
+              .select('id', { count: 'exact', head: true })
+              .eq('course_id', course.id)
+              .eq('status', 'active')
+          ).count ?? 0,
       }))
     );
 

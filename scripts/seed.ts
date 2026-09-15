@@ -1,24 +1,26 @@
-import mongoose from 'mongoose';
 import * as dotenv from 'dotenv';
-import User from '../lib/db/models/User';
+import bcrypt from 'bcryptjs';
 
 dotenv.config({ path: '.env.local' });
 
 async function seed() {
-  try {
-    await mongoose.connect(process.env.MONGODB_URI!);
-    console.log('Connected to MongoDB');
+  const { supabase } = await import('../lib/supabase');
 
-    const existingOwner = await User.findOne({ role: 'owner' });
+  try {
+    const { data: existingOwner } = await supabase.from('users').select('id').eq('role', 'owner').maybeSingle();
+
     if (existingOwner) {
       console.log('Owner user already exists');
     } else {
-      const owner = await User.create({
-        email: 'admin@evolveacademy.com',
-        password: 'admin123',
-        name: 'Administrador',
-        role: 'owner',
-      });
+      const password = await bcrypt.hash('admin123', 10);
+      const { data: owner, error } = await supabase
+        .from('users')
+        .insert({ email: 'admin@evolveacademy.com', password, name: 'Administrador', role: 'owner' })
+        .select()
+        .single();
+
+      if (error) throw error;
+
       console.log('Owner user created successfully!');
       console.log('Email:', owner.email);
       console.log('Password: admin123');
