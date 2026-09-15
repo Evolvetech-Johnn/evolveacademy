@@ -70,13 +70,13 @@ Acesse [http://localhost:3000](http://localhost:3000)
 ### Cursos
 - `/` — home institucional com cursos em destaque
 - `/cursos/marketing` — landing de vendas do curso
-- `/cursos/marketing/aulas/[slug]` — aula (a primeira é liberada sem login como isca; as demais exigem login)
-- `/meus-cursos` — área do aluno logado, lista todos os módulos/aulas do curso
+- `/cursos/marketing/aulas/[slug]` — aula, com conteúdo completo aberto para qualquer visitante
+- `/meus-cursos` — área do aluno logado (opcional), lista todos os módulos/aulas do curso
 - `/dashboard`, `/cursos-admin`, `/settings` — painel administrativo (`owner`/`professor`)
 
 Conteúdo de curso é modelado em `courses` → `modules` → `lessons` (ver `supabase/schema.sql` e `lib/types.ts`). Cada aula segue uma estrutura fixa: objetivo, conceito central, aprofundamento tático, exemplo prático, contraexemplo, erro comum, exercício de fixação e "para ir além" — populada pelo parser em `scripts/seedCourseMarketing.ts`.
 
-**Pagamento ainda não está integrado.** Enquanto isso, qualquer usuário autenticado que abre uma aula recebe matrícula (`Enrollment`) automática — ver o comentário `ponytail:` em `lib/courses.ts`.
+**Fase inicial de testes: sem pagamento e sem login obrigatório.** Todas as aulas estão abertas a qualquer visitante — o gate por login/matrícula (`Enrollment`) já existe em `lib/courses.ts` (`ensureEnrollment`/`hasActiveEnrollment`) e fica pronto para reativar quando o curso passar a ser pago (ver comentário `ponytail:` em `app/cursos/marketing/aulas/[slug]/page.tsx`).
 
 ## Estrutura do Projeto
 

@@ -33,19 +33,19 @@ export default function CourseHero({ freeLessonSlug }: CourseHeroProps) {
           <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4">
             <motion.div variants={buttonVariants} whileHover="hover" whileTap="tap">
               <Link
-                href="/login?callbackUrl=%2Fmeus-cursos"
+                href={`/cursos/marketing/aulas/${freeLessonSlug}`}
                 className="px-6 py-3.5 bg-accent-secondary text-base font-semibold rounded-lg hover:bg-accent-secondary/90 transition-colors"
               >
-                Quero começar agora
+                Começar agora
               </Link>
             </motion.div>
             <motion.div variants={buttonVariants} whileHover="hover" whileTap="tap">
-              <Link
-                href={`/cursos/marketing/aulas/${freeLessonSlug}`}
+              <a
+                href="#modulos"
                 className="px-6 py-3.5 bg-transparent border border-gray-200 text-text font-semibold rounded-lg hover:border-gray-300 transition-colors"
               >
-                Ver aula grátis
-              </Link>
+                Ver todos os módulos
+              </a>
             </motion.div>
           </motion.div>
         </motion.div>

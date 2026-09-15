@@ -30,7 +30,7 @@ export default function Header() {
             </Link>
             <motion.div variants={buttonVariants} whileHover="hover" whileTap="tap">
               <Link
-                href="/login"
+                href="/cursos/marketing"
                 className="px-5 py-2.5 bg-accent-primary text-white font-semibold rounded-lg hover:bg-accent-primary/90 transition-colors"
               >
                 Começar

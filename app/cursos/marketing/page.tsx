@@ -52,13 +52,14 @@ export default async function CourseMarketingPage() {
   if (!data) notFound();
 
   const { modules } = data;
-  const freeLesson = modules.flatMap((m) => m.lessons).find((l) => l.isFreePreview);
+  const firstLessonSlug =
+    modules.flatMap((m) => m.lessons).find((l) => l.isFreePreview)?.slug ?? modules[0]?.lessons[0]?.slug ?? '';
 
   return (
     <div className="min-h-screen bg-surface">
       <Header />
       <main>
-        <CourseHero freeLessonSlug={freeLesson?.slug ?? modules[0]?.lessons[0]?.slug ?? ''} />
+        <CourseHero freeLessonSlug={firstLessonSlug} />
         <Benefits
           id="o-que-voce-aprende"
           title="O que você vai aprender"
@@ -69,7 +70,7 @@ export default async function CourseMarketingPage() {
         <SocialProof />
         <Faq />
       </main>
-      <CourseCtaFinal />
+      <CourseCtaFinal freeLessonSlug={firstLessonSlug} />
       <Footer />
     </div>
   );

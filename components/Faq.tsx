@@ -22,9 +22,9 @@ const faqItems = [
       'Acesso vitalício. Você estuda no seu ritmo e pode voltar a qualquer módulo sempre que precisar revisar um conceito antes de uma campanha real.',
   },
   {
-    question: 'Quando o curso abre para matrícula com pagamento?',
+    question: 'Preciso criar conta ou pagar para acessar?',
     answer:
-      'Em breve. Crie sua conta agora para garantir acesso antecipado assim que o checkout abrir.',
+      'Não. O curso está em fase inicial de testes: todas as aulas estão abertas, sem login e sem custo.',
   },
 ];
 

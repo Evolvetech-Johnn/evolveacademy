@@ -83,12 +83,9 @@ export default function ModuleAccordion({ modules }: ModuleAccordionProps) {
                         <li key={lesson._id}>
                           <Link
                             href={`/cursos/marketing/aulas/${lesson.slug}`}
-                            className="text-text hover:text-accent-secondary transition-colors flex items-center gap-2"
+                            className="text-text hover:text-accent-secondary transition-colors"
                           >
                             {lesson.title}
-                            {lesson.isFreePreview && (
-                              <span className="text-xs font-semibold text-accent-primary">grátis</span>
-                            )}
                           </Link>
                         </li>
                       ))}

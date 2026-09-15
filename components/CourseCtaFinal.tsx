@@ -4,7 +4,11 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { fadeInUpVariants, buttonVariants } from '../animations/variants';
 
-export default function CourseCtaFinal() {
+interface CourseCtaFinalProps {
+  freeLessonSlug: string;
+}
+
+export default function CourseCtaFinal({ freeLessonSlug }: CourseCtaFinalProps) {
   return (
     <section className="bg-base text-white py-16 md:py-24">
       <motion.div
@@ -27,10 +31,10 @@ export default function CourseCtaFinal() {
           whileTap="tap"
         >
           <Link
-            href="/login?callbackUrl=%2Fmeus-cursos"
+            href={`/cursos/marketing/aulas/${freeLessonSlug}`}
             className="inline-block px-8 py-4 bg-accent-secondary text-base font-semibold rounded-lg hover:bg-accent-secondary/90 transition-colors"
           >
-            Garantir meu acesso vitalício
+            Começar o curso agora
           </Link>
         </motion.div>
       </motion.div>
