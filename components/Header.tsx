@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { containerVariants, itemVariants, buttonVariants } from '../animations/variants';
 
@@ -15,7 +16,8 @@ export default function Header() {
           className="flex justify-between items-center h-16"
         >
           <motion.div variants={itemVariants} className="flex items-center">
-            <Link href="/" className="text-2xl font-bold text-base">
+            <Link href="/" className="flex items-center gap-2 text-2xl font-bold text-base">
+              <Image src="/logo.png" alt="Evolveacademy" width={32} height={32} priority />
               Evolveacademy
             </Link>
           </motion.div>
