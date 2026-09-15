@@ -25,9 +25,6 @@ export default function Header() {
             <Link href="/cursos/marketing" className="text-text hover:text-base font-medium transition-colors hidden sm:inline">
               Cursos
             </Link>
-            <Link href="/login" className="text-text hover:text-base font-medium transition-colors">
-              Entrar
-            </Link>
             <motion.div variants={buttonVariants} whileHover="hover" whileTap="tap">
               <Link
                 href="/cursos/marketing"

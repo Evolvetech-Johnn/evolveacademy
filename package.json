@@ -7,24 +7,16 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "seed": "npx tsx scripts/seed.ts",
     "seed:course": "npx tsx scripts/seedCourseMarketing.ts"
   },
   "dependencies": {
-    "@hookform/resolvers": "^3.9.0",
     "@supabase/supabase-js": "^2.45.4",
-    "bcryptjs": "^2.4.3",
-    "cloudinary": "^2.4.0",
     "framer-motion": "^12.42.2",
     "next": "^16.2.9",
-    "next-auth": "^4.24.7",
     "react": "^18",
-    "react-dom": "^18",
-    "react-hook-form": "^7.53.0",
-    "zod": "^3.23.8"
+    "react-dom": "^18"
   },
   "devDependencies": {
-    "@types/bcryptjs": "^2.4.6",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

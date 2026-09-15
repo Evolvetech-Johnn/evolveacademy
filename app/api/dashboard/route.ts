@@ -1,16 +1,11 @@
 import { NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth/next';
-import { authOptions } from '@/lib/auth/options';
 import { supabase } from '@/lib/supabase';
 import type { Course } from '@/lib/types';
 
+// ponytail: fase inicial de testes, sem autenticação — reintroduzir o gate de
+// sessão aqui quando o login voltar.
 export async function GET() {
   try {
-    const session = await getServerSession(authOptions);
-    if (!session || (session.user.role !== 'owner' && session.user.role !== 'professor')) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
     const [courseCount, moduleCount, lessonCount, enrollmentCount, { data: courses }] = await Promise.all([
       supabase.from('courses').select('id', { count: 'exact', head: true }).then((r) => r.count ?? 0),
       supabase.from('modules').select('id', { count: 'exact', head: true }).then((r) => r.count ?? 0),
