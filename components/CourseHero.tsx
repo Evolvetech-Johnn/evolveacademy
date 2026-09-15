@@ -21,14 +21,14 @@ export default function CourseHero({ freeLessonSlug }: CourseHeroProps) {
         >
           <motion.div variants={itemVariants} className="mb-4">
             <span className="inline-block px-3 py-1 bg-accent-secondary/10 text-accent-secondary rounded-full text-sm font-medium">
-              Curso online · 7 módulos · 43 aulas
+              Curso online · 7 módulos · 42 aulas
             </span>
           </motion.div>
           <motion.h1 variants={itemVariants} className="text-4xl md:text-5xl lg:text-6xl font-bold text-base mb-6 leading-tight">
             Marketing não é sorte nem talento artístico. É um sistema que dá para aprender — e aplicar amanhã.
           </motion.h1>
           <motion.p variants={itemVariants} className="text-lg md:text-xl text-text mb-8 max-w-2xl">
-            7 módulos, 43 aulas: os frameworks de Kotler, Cialdini, Ogilvy e Christensen traduzidos em exercícios práticos. Do &quot;o que é marketing de verdade&quot; até o seu próprio plano de 90 dias.
+            7 módulos, 42 aulas: os frameworks de Kotler, Cialdini, Ogilvy e Christensen traduzidos em exercícios práticos. Do &quot;o que é marketing de verdade&quot; até o seu próprio plano de 90 dias.
           </motion.p>
           <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4">
             <motion.div variants={buttonVariants} whileHover="hover" whileTap="tap">

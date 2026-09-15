@@ -14,7 +14,7 @@ export const dynamic = 'force-dynamic';
 export const metadata = {
   title: 'Curso de Marketing: do Zero ao Avançado | Evolveacademy',
   description:
-    '7 módulos, 43 aulas — os frameworks de Kotler, Cialdini, Ogilvy e Christensen aplicados em exercícios práticos para o marketing do seu negócio.',
+    '7 módulos, 42 aulas — os frameworks de Kotler, Cialdini, Ogilvy e Christensen aplicados em exercícios práticos para o marketing do seu negócio.',
 };
 
 const courseBenefits = [

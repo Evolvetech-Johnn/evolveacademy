@@ -9,7 +9,7 @@ import { getLessonBySlug, ensureEnrollment, hasActiveEnrollment } from '@/lib/co
 export const dynamic = 'force-dynamic';
 
 interface LessonPageProps {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
 const contentFields: { key: keyof NonNullable<Awaited<ReturnType<typeof getLessonBySlug>>>; label: string }[] = [
@@ -24,7 +24,8 @@ const contentFields: { key: keyof NonNullable<Awaited<ReturnType<typeof getLesso
 ];
 
 export default async function LessonPage({ params }: LessonPageProps) {
-  const lesson = await getLessonBySlug(params.slug);
+  const { slug } = await params;
+  const lesson = await getLessonBySlug(slug);
   if (!lesson) notFound();
 
   const session = await getServerSession(authOptions);

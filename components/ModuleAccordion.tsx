@@ -29,7 +29,7 @@ export default function ModuleAccordion({ modules }: ModuleAccordionProps) {
       <div className="mb-12">
         <h2 className="text-3xl md:text-4xl font-bold text-base mb-4">Os 7 módulos do curso</h2>
         <p className="text-lg text-text max-w-2xl">
-          43 aulas organizadas numa sequência que vai dos fundamentos ao plano de 90 dias de execução.
+          42 aulas organizadas numa sequência que vai dos fundamentos ao plano de 90 dias de execução.
         </p>
       </div>
       <motion.div

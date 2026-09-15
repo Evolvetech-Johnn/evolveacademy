@@ -1,6 +1,6 @@
 # Evolveacademy
 
-Plataforma de cursos online da **EvolveTech Solutions**. O primeiro curso publicado é o **Curso de Marketing: do Zero ao Avançado** (7 módulos, 43 aulas), com conteúdo em [docs/curso-marketing.md](docs/curso-marketing.md).
+Plataforma de cursos online da **EvolveTech Solutions**. O primeiro curso publicado é o **Curso de Marketing: do Zero ao Avançado** (7 módulos, 42 aulas), com conteúdo em [docs/curso-marketing.md](docs/curso-marketing.md).
 
 ## Tech Stack
 

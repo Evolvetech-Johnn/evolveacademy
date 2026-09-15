@@ -1,6 +1,6 @@
 # Curso de marketing: do zero ao avançado
 
-7 módulos · 43 aulas · glossário de 26 termos. Cada aula: objetivo, conceito central (com framework consagrado), aprofundamento tático, exemplo prático, contraexemplo, erro comum, exercício de fixação, para ir além.
+7 módulos · 42 aulas · glossário de 26 termos. Cada aula: objetivo, conceito central (com framework consagrado), aprofundamento tático, exemplo prático, contraexemplo, erro comum, exercício de fixação, para ir além.
 
 ---
 

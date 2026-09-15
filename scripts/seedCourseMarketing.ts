@@ -101,7 +101,7 @@ async function seedCourse() {
           slug: COURSE_SLUG,
           title: 'Curso de Marketing: do Zero ao Avançado',
           description:
-            '7 módulos, 43 aulas e glossário de 26 termos — dos fundamentos de marketing ao growth avançado, com frameworks consagrados (Kotler, Cialdini, Ogilvy, Christensen) aplicados a exemplos reais.',
+            '7 módulos, 42 aulas e glossário de 26 termos — dos fundamentos de marketing ao growth avançado, com frameworks consagrados (Kotler, Cialdini, Ogilvy, Christensen) aplicados a exemplos reais.',
           is_published: true,
         },
         { onConflict: 'slug' }
