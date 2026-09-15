@@ -114,9 +114,29 @@ evolveacademy/
 └── ...
 ```
 
+## Cursos (infoprodutos)
+
+Split 1 da plataforma de cursos: o conteúdo de [docs/curso-marketing.md](docs/curso-marketing.md) é populado no Mongo com:
+
+```bash
+npm run seed:course
+```
+
+Isso cria o Course/Module/Lesson do "Curso de Marketing: do Zero ao Avançado" (7 módulos, 43 aulas). Rotas:
+- `/cursos/marketing` — landing de vendas
+- `/cursos/marketing/aulas/[slug]` — aula (1ª aula liberada sem login; demais exigem login)
+- `/meus-cursos` — área do aluno logado
+
+Pagamento ainda não está integrado (auto-enrollment liberado para qualquer usuário logado) — ver `lib/courses.ts`.
+
+## Deploy na Vercel
+
+Configurar no dashboard da Vercel as mesmas env vars do `.env.local`: `MONGODB_URI`, `NEXTAUTH_URL` (URL de produção), `NEXTAUTH_SECRET`, `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET`. Rodar `npm run build` localmente antes do deploy para garantir que compila sem erros.
+
 ## Próximos Passos
 
-- [ ] Área do Aluno
+- [ ] Checkout/pagamento do curso (Split 2)
+- [ ] Multi-curso, progresso do aluno, certificado (Split 3)
 - [ ] Programas de Treino
 - [ ] Biblioteca de Exercícios
 - [ ] Acompanhamento de Evolução

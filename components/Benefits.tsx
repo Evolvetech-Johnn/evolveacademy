@@ -10,7 +10,7 @@ interface Benefit {
   description: string;
 }
 
-const benefits: Benefit[] = [
+const defaultBenefits: Benefit[] = [
   {
     icon: (
       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -40,16 +40,24 @@ const benefits: Benefit[] = [
   },
 ];
 
-export default function Benefits() {
+interface BenefitsProps {
+  id?: string;
+  title?: string;
+  subtitle?: string;
+  items?: Benefit[];
+}
+
+export default function Benefits({
+  id = 'beneficios',
+  title = 'Tudo que você precisa em um só sistema',
+  subtitle = 'Funcionalidades práticas, desenvolvidas especificamente para academias brasileiras.',
+  items = defaultBenefits,
+}: BenefitsProps) {
   return (
-    <Section id="beneficios">
+    <Section id={id}>
       <div className="mb-12">
-        <h2 className="text-3xl md:text-4xl font-bold text-base mb-4">
-          Tudo que você precisa em um só sistema
-        </h2>
-        <p className="text-lg text-text max-w-2xl">
-          Funcionalidades práticas, desenvolvidas especificamente para academias brasileiras.
-        </p>
+        <h2 className="text-3xl md:text-4xl font-bold text-base mb-4">{title}</h2>
+        <p className="text-lg text-text max-w-2xl">{subtitle}</p>
       </div>
       <motion.div
         initial="hidden"
@@ -58,7 +66,7 @@ export default function Benefits() {
         variants={containerVariants}
         className="grid md:grid-cols-3 gap-6"
       >
-        {benefits.map((benefit, index) => (
+        {items.map((benefit, index) => (
           <motion.div
             key={index}
             variants={itemVariants}
