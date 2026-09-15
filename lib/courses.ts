@@ -99,6 +99,31 @@ export async function getLessonBySlug(slug: string): Promise<LessonDetail | null
   return lesson ? toLessonDetail(lesson) : null;
 }
 
+export interface LessonNavLink {
+  slug: string;
+  title: string;
+}
+
+export async function getLessonNavigation(
+  courseSlug: string,
+  currentSlug: string
+): Promise<{ prev: LessonNavLink | null; next: LessonNavLink | null }> {
+  const data = await getCourseWithModules(courseSlug);
+  if (!data) return { prev: null, next: null };
+
+  const sequence = data.modules.flatMap((mod) => mod.lessons);
+  const currentIndex = sequence.findIndex((lesson) => lesson.slug === currentSlug);
+  if (currentIndex === -1) return { prev: null, next: null };
+
+  const prevLesson = sequence[currentIndex - 1];
+  const nextLesson = sequence[currentIndex + 1];
+
+  return {
+    prev: prevLesson ? { slug: prevLesson.slug, title: prevLesson.title } : null,
+    next: nextLesson ? { slug: nextLesson.slug, title: nextLesson.title } : null,
+  };
+}
+
 /**
  * ponytail: acesso liberado automaticamente para qualquer usuário logado até o
  * checkout entrar no Split 2 — trocar por verificação de pagamento confirmado.
