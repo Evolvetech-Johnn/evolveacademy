@@ -23,7 +23,7 @@ export default async function MeusCursosPage() {
         ) : (
           <div className="border border-gray-100 rounded-xl bg-surface p-4 sm:p-6 mb-10">
             <h2 className="text-lg sm:text-xl font-semibold text-base mb-1">{data.course.title}</h2>
-            <p className="text-text mb-6">{data.course.description}</p>
+            <p className="text-text mb-6 text-justify">{data.course.description}</p>
 
             <div className="space-y-6">
               {data.modules.map((mod) => (

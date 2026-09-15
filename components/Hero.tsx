@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { containerVariants, itemVariants, buttonVariants } from '../animations/variants';
+import { containerVariants, itemVariants } from '../animations/variants';
 
 export default function Hero() {
   return (
@@ -23,26 +23,22 @@ export default function Hero() {
           <motion.h1 variants={itemVariants} className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-base mb-6 leading-tight">
             Aprenda com quem aplica isso todo dia em negócios de verdade.
           </motion.h1>
-          <motion.p variants={itemVariants} className="text-lg md:text-xl text-text mb-8 max-w-2xl">
+          <motion.p variants={itemVariants} className="text-lg md:text-xl text-text mb-8 max-w-2xl text-justify">
             Cursos práticos, direto ao ponto, criados pela EvolveTech Solutions para quem quer resultado — não teoria solta.
           </motion.p>
           <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4">
-            <motion.div variants={buttonVariants} whileHover="hover" whileTap="tap">
-              <Link
-                href="/cursos/marketing"
-                className="block w-full sm:w-auto text-center px-6 py-3.5 bg-accent-primary text-white font-semibold rounded-lg hover:bg-accent-primary/90 transition-colors"
-              >
-                Ver curso de Marketing
-              </Link>
-            </motion.div>
-            <motion.div variants={buttonVariants} whileHover="hover" whileTap="tap">
-              <a
-                href="#cursos"
-                className="block w-full sm:w-auto text-center px-6 py-3.5 bg-transparent border border-gray-200 text-text font-semibold rounded-lg hover:border-gray-300 transition-colors"
-              >
-                Ver todos os cursos
-              </a>
-            </motion.div>
+            <Link
+              href="/cursos/marketing"
+              className="block w-full sm:w-auto text-center px-6 py-3.5 bg-accent-primary text-white font-semibold rounded-lg hover:bg-accent-primary/90 active:scale-95 transition-all"
+            >
+              Ver curso de Marketing
+            </Link>
+            <a
+              href="#cursos"
+              className="block w-full sm:w-auto text-center px-6 py-3.5 bg-transparent border border-gray-200 text-text font-semibold rounded-lg hover:border-gray-300 active:scale-95 transition-all"
+            >
+              Ver todos os cursos
+            </a>
           </motion.div>
         </motion.div>
       </div>

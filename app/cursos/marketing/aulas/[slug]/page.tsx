@@ -42,7 +42,7 @@ export default async function LessonPage({ params }: LessonPageProps) {
           {contentFields.map(({ key, label }) => (
             <div key={key}>
               <h2 className="text-sm sm:text-lg font-semibold text-accent-secondary mb-2">{label}</h2>
-              <p className="text-text whitespace-pre-line leading-relaxed">{String(lesson[key])}</p>
+              <p className="text-text whitespace-pre-line leading-relaxed text-justify">{String(lesson[key])}</p>
             </div>
           ))}
         </div>

@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { containerVariants, itemVariants, buttonVariants } from '../animations/variants';
+import { containerVariants, itemVariants } from '../animations/variants';
 
 export default function Header() {
   return (
@@ -25,14 +25,12 @@ export default function Header() {
             <Link href="/cursos/marketing" className="text-text hover:text-base font-medium transition-colors hidden sm:inline">
               Cursos
             </Link>
-            <motion.div variants={buttonVariants} whileHover="hover" whileTap="tap">
-              <Link
-                href="/cursos/marketing"
-                className="px-3.5 sm:px-5 py-2 sm:py-2.5 bg-accent-primary text-white text-sm sm:text-base font-semibold rounded-lg hover:bg-accent-primary/90 transition-colors whitespace-nowrap"
-              >
-                Começar
-              </Link>
-            </motion.div>
+            <Link
+              href="/cursos/marketing"
+              className="px-3.5 sm:px-5 py-2 sm:py-2.5 bg-accent-primary text-white text-sm sm:text-base font-semibold rounded-lg hover:bg-accent-primary/90 active:scale-95 transition-all whitespace-nowrap"
+            >
+              Começar
+            </Link>
           </motion.div>
         </motion.div>
       </div>

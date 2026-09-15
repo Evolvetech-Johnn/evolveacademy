@@ -57,7 +57,7 @@ export default function ModuleAccordion({ modules }: ModuleAccordionProps) {
                 </span>
                 <div className="flex-1 min-w-0">
                   <h3 className="text-lg sm:text-xl font-semibold text-base">{mod.title}</h3>
-                  <p className="text-text text-sm sm:text-base mt-1 hidden sm:block">{moduleHooks[mod.order]}</p>
+                  <p className="text-text text-sm sm:text-base mt-1 hidden sm:block text-justify">{moduleHooks[mod.order]}</p>
                 </div>
                 <motion.svg
                   animate={{ rotate: isOpen ? 180 : 0 }}

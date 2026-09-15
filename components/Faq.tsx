@@ -76,7 +76,7 @@ export default function Faq() {
                     exit={{ height: 0, opacity: 0 }}
                     transition={{ duration: 0.2 }}
                   >
-                    <p className="px-6 pb-6 text-text">{item.answer}</p>
+                    <p className="px-6 pb-6 text-text text-justify">{item.answer}</p>
                   </motion.div>
                 )}
               </AnimatePresence>

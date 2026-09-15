@@ -17,7 +17,7 @@ export default function Footer() {
         >
           <motion.div variants={itemVariants} className="md:col-span-2">
             <h4 className="text-2xl font-bold mb-4">Evolveacademy</h4>
-            <p className="text-gray-400 max-w-sm">
+            <p className="text-gray-400 max-w-sm text-justify">
               A plataforma de cursos online da EvolveTech Solutions — conhecimento prático para quem
               toca marketing, vendas e crescimento no dia a dia.
             </p>

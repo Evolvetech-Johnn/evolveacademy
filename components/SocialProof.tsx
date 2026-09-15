@@ -20,7 +20,7 @@ export default function SocialProof() {
         <h2 className="text-3xl md:text-4xl font-bold text-base mb-4">
           Por que confiar nesta metodologia
         </h2>
-        <p className="text-lg text-text max-w-2xl">
+        <p className="text-lg text-text max-w-2xl text-justify">
           O curso não inventa teoria nova — organiza, num sistema único, os frameworks que sustentam
           decisões de marketing profissional há décadas e continuam validados. Cada aula segue a mesma
           estrutura: conceito central com a fonte original, aprofundamento tático, exemplo prático,

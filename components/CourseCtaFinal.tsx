@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { fadeInUpVariants, buttonVariants } from '../animations/variants';
+import { fadeInUpVariants } from '../animations/variants';
 
 interface CourseCtaFinalProps {
   freeLessonSlug: string;
@@ -24,19 +24,12 @@ export default function CourseCtaFinal({ freeLessonSlug }: CourseCtaFinalProps) 
         <p className="text-lg text-gray-300 mb-8">
           A diferença entre continuar tentando e ter um sistema está em 7 módulos.
         </p>
-        <motion.div
-          className="w-full sm:w-auto sm:inline-block"
-          variants={buttonVariants}
-          whileHover="hover"
-          whileTap="tap"
+        <Link
+          href={`/cursos/marketing/aulas/${freeLessonSlug}`}
+          className="block w-full sm:w-auto sm:inline-block text-center px-8 py-4 bg-accent-secondary text-base font-semibold rounded-lg hover:bg-accent-secondary/90 active:scale-95 transition-all"
         >
-          <Link
-            href={`/cursos/marketing/aulas/${freeLessonSlug}`}
-            className="block w-full sm:w-auto sm:inline-block text-center px-8 py-4 bg-accent-secondary text-base font-semibold rounded-lg hover:bg-accent-secondary/90 transition-colors"
-          >
-            Começar o curso agora
-          </Link>
-        </motion.div>
+          Começar o curso agora
+        </Link>
       </motion.div>
     </section>
   );

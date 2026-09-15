@@ -22,7 +22,7 @@ export default function FeaturedCourses({ courses }: FeaturedCoursesProps) {
           {courses.map((course) => (
             <div key={course.slug} className="p-6 border border-gray-100 rounded-xl bg-surface flex flex-col">
               <h3 className="text-xl font-semibold text-base mb-2">{course.title}</h3>
-              <p className="text-text mb-6 flex-1">{course.description}</p>
+              <p className="text-text mb-6 flex-1 text-justify">{course.description}</p>
               <Link
                 href={`/cursos/${course.slug}`}
                 className="px-5 py-2.5 bg-accent-primary text-white font-semibold rounded-lg hover:bg-accent-primary/90 transition-colors text-center"

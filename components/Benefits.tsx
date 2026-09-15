@@ -42,7 +42,7 @@ export default function Benefits({ id = 'beneficios', title, subtitle, items }: 
               {benefit.icon}
             </div>
             <h3 className="text-xl font-semibold text-base mb-2">{benefit.title}</h3>
-            <p className="text-text">{benefit.description}</p>
+            <p className="text-text text-justify">{benefit.description}</p>
           </motion.div>
         ))}
       </motion.div>
