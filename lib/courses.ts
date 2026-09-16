@@ -104,23 +104,42 @@ export interface LessonNavLink {
   title: string;
 }
 
+export interface LessonProgress {
+  moduleTitle: string;
+  moduleOrder: number;
+  positionInModule: number;
+  totalInModule: number;
+}
+
 export async function getLessonNavigation(
   courseSlug: string,
   currentSlug: string
-): Promise<{ prev: LessonNavLink | null; next: LessonNavLink | null }> {
+): Promise<{ prev: LessonNavLink | null; next: LessonNavLink | null; progress: LessonProgress | null }> {
   const data = await getCourseWithModules(courseSlug);
-  if (!data) return { prev: null, next: null };
+  if (!data) return { prev: null, next: null, progress: null };
 
   const sequence = data.modules.flatMap((mod) => mod.lessons);
   const currentIndex = sequence.findIndex((lesson) => lesson.slug === currentSlug);
-  if (currentIndex === -1) return { prev: null, next: null };
+  if (currentIndex === -1) return { prev: null, next: null, progress: null };
 
   const prevLesson = sequence[currentIndex - 1];
   const nextLesson = sequence[currentIndex + 1];
+  const currentModule = data.modules.find((mod) => mod._id === sequence[currentIndex].moduleId) ?? null;
+  const positionInModule = currentModule
+    ? currentModule.lessons.findIndex((lesson) => lesson.slug === currentSlug) + 1
+    : 0;
 
   return {
     prev: prevLesson ? { slug: prevLesson.slug, title: prevLesson.title } : null,
     next: nextLesson ? { slug: nextLesson.slug, title: nextLesson.title } : null,
+    progress: currentModule
+      ? {
+          moduleTitle: currentModule.title,
+          moduleOrder: currentModule.order,
+          positionInModule,
+          totalInModule: currentModule.lessons.length,
+        }
+      : null,
   };
 }
 

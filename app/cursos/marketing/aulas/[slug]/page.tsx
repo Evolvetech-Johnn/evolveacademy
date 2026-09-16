@@ -29,7 +29,7 @@ export default async function LessonPage({ params }: LessonPageProps) {
   const lesson = await getLessonBySlug(slug);
   if (!lesson) notFound();
 
-  const { prev, next } = await getLessonNavigation('marketing', slug);
+  const { prev, next, progress } = await getLessonNavigation('marketing', slug);
 
   return (
     <div className="min-h-screen bg-surface">
@@ -38,6 +38,22 @@ export default async function LessonPage({ params }: LessonPageProps) {
         <Link href="/cursos/marketing" className="text-accent-secondary font-medium hover:underline">
           ← Voltar para o curso
         </Link>
+
+        {progress && (
+          <div className="mt-6">
+            <div className="flex items-center justify-between text-xs sm:text-sm text-text mb-1.5">
+              <span>Módulo {progress.moduleOrder} · {progress.moduleTitle}</span>
+              <span>Aula {progress.positionInModule} de {progress.totalInModule}</span>
+            </div>
+            <div className="h-1.5 w-full rounded-full bg-gray-100 overflow-hidden">
+              <div
+                className="h-full rounded-full bg-accent-secondary transition-all"
+                style={{ width: `${(progress.positionInModule / progress.totalInModule) * 100}%` }}
+              />
+            </div>
+          </div>
+        )}
+
         <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-base mt-4 mb-6 sm:mb-8 leading-snug">{lesson.title}</h1>
 
         <div className="space-y-6 sm:space-y-8">
