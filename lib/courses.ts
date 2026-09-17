@@ -107,8 +107,11 @@ export interface LessonNavLink {
 export interface LessonProgress {
   moduleTitle: string;
   moduleOrder: number;
+  totalModules: number;
   positionInModule: number;
   totalInModule: number;
+  positionInCourse: number;
+  totalInCourse: number;
 }
 
 export async function getLessonNavigation(
@@ -136,8 +139,11 @@ export async function getLessonNavigation(
       ? {
           moduleTitle: currentModule.title,
           moduleOrder: currentModule.order,
+          totalModules: data.modules.length,
           positionInModule,
           totalInModule: currentModule.lessons.length,
+          positionInCourse: currentIndex + 1,
+          totalInCourse: sequence.length,
         }
       : null,
   };

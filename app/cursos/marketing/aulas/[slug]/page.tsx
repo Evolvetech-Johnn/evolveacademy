@@ -42,8 +42,10 @@ export default async function LessonPage({ params }: LessonPageProps) {
         {progress && (
           <div className="mt-6">
             <div className="flex items-center justify-between text-xs sm:text-sm text-text mb-1.5">
-              <span>Módulo {progress.moduleOrder} · {progress.moduleTitle}</span>
-              <span>Aula {progress.positionInModule} de {progress.totalInModule}</span>
+              <span>
+                Módulo {progress.moduleOrder} de {progress.totalModules} · {progress.moduleTitle}
+              </span>
+              <span>Aula {progress.positionInModule} de {progress.totalInModule} neste módulo</span>
             </div>
             <div className="h-1.5 w-full rounded-full bg-gray-100 overflow-hidden">
               <div
@@ -51,6 +53,9 @@ export default async function LessonPage({ params }: LessonPageProps) {
                 style={{ width: `${(progress.positionInModule / progress.totalInModule) * 100}%` }}
               />
             </div>
+            <p className="text-xs text-text mt-1.5">
+              Aula {progress.positionInCourse} de {progress.totalInCourse} no curso completo
+            </p>
           </div>
         )}
 
