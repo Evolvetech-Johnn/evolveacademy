@@ -4,16 +4,12 @@ import { motion } from 'framer-motion';
 import { containerVariants, itemVariants } from '../animations/variants';
 import Section from './Section';
 
-const authorities = [
-  { name: 'Philip Kotler & David Aaker', note: '4 Ps, marca e posicionamento' },
-  { name: 'Robert Cialdini', note: 'gatilhos de persuasão' },
-  { name: 'David Ogilvy', note: 'headline e copy de resposta direta' },
-  { name: 'Clayton Christensen', note: 'Jobs to Be Done' },
-  { name: 'Donald Miller', note: 'StoryBrand aplicado a vendas' },
-  { name: 'Dave McClure', note: 'AARRR e métricas de growth' },
-];
+interface SocialProofProps {
+  authorities: { name: string; note: string }[];
+  text: string;
+}
 
-export default function SocialProof() {
+export default function SocialProof({ authorities, text }: SocialProofProps) {
   return (
     <Section>
       <div className="mb-12">
@@ -21,10 +17,7 @@ export default function SocialProof() {
           Por que confiar nesta metodologia
         </h2>
         <p className="text-lg text-text max-w-2xl text-justify">
-          O curso não inventa teoria nova — organiza, num sistema único, os frameworks que sustentam
-          decisões de marketing profissional há décadas e continuam validados. Cada aula segue a mesma
-          estrutura: conceito central com a fonte original, aprofundamento tático, exemplo prático,
-          contraexemplo real, erro comum e exercício de fixação.
+          {text}
         </p>
       </div>
       <motion.div

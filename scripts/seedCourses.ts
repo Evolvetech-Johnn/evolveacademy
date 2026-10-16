@@ -4,8 +4,22 @@ import * as dotenv from 'dotenv';
 
 dotenv.config({ path: '.env.local' });
 
-const COURSE_SLUG = 'marketing';
-const MD_PATH = path.join(__dirname, '..', 'docs', 'curso-marketing.md');
+const COURSES = {
+  marketing: {
+    md: 'curso-marketing.md',
+    title: 'Curso de Marketing: do Zero ao Avançado',
+    description:
+      '7 módulos, 42 aulas e glossário de 26 termos — dos fundamentos de marketing ao growth avançado, com frameworks consagrados (Kotler, Cialdini, Ogilvy, Christensen) aplicados a exemplos reais.',
+  },
+  webdesign: {
+    md: 'curso-webdesign.md',
+    title: 'Curso de Web Design: do Zero ao Avançado',
+    description:
+      '7 módulos, 42 aulas e glossário de 27 termos — de HTML semântico e CSS a UI/UX, JavaScript, performance, acessibilidade e carreira, com frameworks consagrados aplicados a exemplos reais.',
+  },
+} as const;
+
+type CourseSlug = keyof typeof COURSES;
 
 const FIELD_LABELS = {
   objetivo: 'Objetivo',
@@ -39,7 +53,7 @@ interface ParsedModule {
   lessons: ParsedLesson[];
 }
 
-function parseMarkdown(raw: string): ParsedModule[] {
+function parseMarkdown(raw: string, courseSlug: string): ParsedModule[] {
   const glossaryIndex = raw.indexOf('\n# Glossário');
   const body = glossaryIndex === -1 ? raw : raw.slice(0, glossaryIndex);
 
@@ -75,7 +89,7 @@ function parseMarkdown(raw: string): ParsedModule[] {
 
       return {
         order: lessonOrder,
-        slug: `${COURSE_SLUG}-${moduleOrder}-${lessonOrder}`,
+        slug: `${courseSlug}-${moduleOrder}-${lessonOrder}`,
         title,
         fields,
       };
@@ -85,23 +99,24 @@ function parseMarkdown(raw: string): ParsedModule[] {
   });
 }
 
-async function seedCourse() {
+async function seedCourse(courseSlug: CourseSlug) {
   const { supabase } = await import('../lib/supabase');
+  const config = COURSES[courseSlug];
 
-  try {
-    const raw = fs.readFileSync(MD_PATH, 'utf-8');
-    const parsedModules = parseMarkdown(raw);
+  {
+    const raw = fs.readFileSync(path.join(__dirname, '..', 'docs', config.md), 'utf-8');
+    const parsedModules = parseMarkdown(raw, courseSlug);
     const totalLessons = parsedModules.reduce((sum, m) => sum + m.lessons.length, 0);
     console.log(`Parsed ${parsedModules.length} módulos, ${totalLessons} aulas`);
+    if (process.env.DRY_RUN) return; // só valida o parser, sem tocar no banco
 
     const { data: course, error: courseError } = await supabase
       .from('courses')
       .upsert(
         {
-          slug: COURSE_SLUG,
-          title: 'Curso de Marketing: do Zero ao Avançado',
-          description:
-            '7 módulos, 42 aulas e glossário de 26 termos — dos fundamentos de marketing ao growth avançado, com frameworks consagrados (Kotler, Cialdini, Ogilvy, Christensen) aplicados a exemplos reais.',
+          slug: courseSlug,
+          title: config.title,
+          description: config.description,
           is_published: true,
         },
         { onConflict: 'slug' }
@@ -147,7 +162,19 @@ async function seedCourse() {
       }
     }
 
-    console.log('Curso de marketing populado com sucesso!');
+    console.log(`Curso ${courseSlug} populado com sucesso!`);
+  }
+}
+
+// uso: npm run seed:course [-- marketing|webdesign] (sem argumento, popula todos); DRY_RUN=1 só valida o parse
+async function main() {
+  const arg = process.argv[2];
+  const slugs = (arg ? [arg] : Object.keys(COURSES)) as CourseSlug[];
+  try {
+    for (const slug of slugs) {
+      if (!(slug in COURSES)) throw new Error(`Curso desconhecido: ${slug}`);
+      await seedCourse(slug);
+    }
     process.exit(0);
   } catch (error) {
     console.error('Error seeding course:', error);
@@ -155,4 +182,4 @@ async function seedCourse() {
   }
 }
 
-seedCourse();
+main();

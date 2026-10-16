@@ -7,29 +7,22 @@ import { containerVariants, itemVariants } from '../animations/variants';
 import Section from './Section';
 import type { PlainModule } from '../lib/courses';
 
-const moduleHooks: Record<number, string> = {
-  1: 'Antes de escrever um anúncio, entenda por que a maioria deles falha: o problema quase nunca é a campanha, é não ter respondido "que problema real isso resolve, para quem".',
-  2: 'Marca não é logo bonito. É o espaço que você ocupa na cabeça do cliente — e aqui você aprende a construir esse espaço de propósito, não por acaso.',
-  3: 'As mesmas estruturas usadas por Ogilvy, Cialdini e Donald Miller para transformar atenção em desejo e desejo em ação — sem depender de sorte na hora de escrever.',
-  4: 'SEO, conteúdo, e-mail e redes sociais param de ser tarefas soltas e viram um sistema conectado, cada canal fazendo o trabalho que só ele faz bem.',
-  5: 'Meta Ads e Google Ads deixam de ser caixa-preta: você entende o leilão, o funil e por que cortar campanha cedo demais é o erro mais caro do tráfego pago.',
-  6: 'A diferença entre achismo e decisão: como ler métrica, rodar teste A/B de verdade e otimizar conversão sem precisar de mais tráfego.',
-  7: 'IA, GEO e tendências de mercado, filtradas pela pergunta certa — e o fechamento do curso: seu próprio plano de marketing de 90 dias, pronto para executar.',
-};
-
 interface ModuleAccordionProps {
+  course: string;
   modules: PlainModule[];
+  hooks: Record<number, string>;
+  subtitle: string;
 }
 
-export default function ModuleAccordion({ modules }: ModuleAccordionProps) {
+export default function ModuleAccordion({ course, modules, hooks, subtitle }: ModuleAccordionProps) {
   const [openId, setOpenId] = useState<string | null>(null);
 
   return (
     <Section id="modulos">
       <div className="mb-12">
-        <h2 className="text-3xl md:text-4xl font-bold text-base mb-4">Os 7 módulos do curso</h2>
+        <h2 className="text-3xl md:text-4xl font-bold text-base mb-4">Os {modules.length} módulos do curso</h2>
         <p className="text-lg text-text max-w-2xl">
-          42 aulas organizadas numa sequência que vai dos fundamentos ao plano de 90 dias de execução.
+          {subtitle}
         </p>
       </div>
       <motion.div
@@ -57,7 +50,7 @@ export default function ModuleAccordion({ modules }: ModuleAccordionProps) {
                 </span>
                 <div className="flex-1 min-w-0">
                   <h3 className="text-lg sm:text-xl font-semibold text-base">{mod.title}</h3>
-                  <p className="text-text text-sm sm:text-base mt-1 hidden sm:block text-justify">{moduleHooks[mod.order]}</p>
+                  <p className="text-text text-sm sm:text-base mt-1 hidden sm:block text-justify">{hooks[mod.order]}</p>
                 </div>
                 <motion.svg
                   animate={{ rotate: isOpen ? 180 : 0 }}
@@ -82,7 +75,7 @@ export default function ModuleAccordion({ modules }: ModuleAccordionProps) {
                       {mod.lessons.map((lesson) => (
                         <li key={lesson._id}>
                           <Link
-                            href={`/cursos/marketing/aulas/${lesson.slug}`}
+                            href={`/cursos/${course}/aulas/${lesson.slug}`}
                             className="text-text hover:text-accent-secondary transition-colors block py-1"
                           >
                             {lesson.title}

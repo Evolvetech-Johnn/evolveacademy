@@ -3,7 +3,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Evolveacademy - Plataforma de Cursos da EvolveTech Solutions",
-  description: "Cursos online práticos da EvolveTech Solutions, começando pelo Curso de Marketing: do Zero ao Avançado.",
+  description: "Cursos online práticos da EvolveTech Solutions, com os cursos de Marketing e Web Design: do Zero ao Avançado.",
 };
 
 export default function RootLayout({

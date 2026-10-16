@@ -5,10 +5,13 @@ import { motion } from 'framer-motion';
 import { containerVariants, itemVariants } from '../animations/variants';
 
 interface CourseHeroProps {
+  course: string;
+  title: string;
+  text: string;
   freeLessonSlug: string;
 }
 
-export default function CourseHero({ freeLessonSlug }: CourseHeroProps) {
+export default function CourseHero({ course, title, text, freeLessonSlug }: CourseHeroProps) {
   return (
     <section className="pt-20 pb-16 md:pt-28 md:pb-24 relative">
       <div className="absolute left-2 sm:left-4 md:left-8 top-20 bottom-0 w-px bg-accent-primary/30" />
@@ -25,14 +28,14 @@ export default function CourseHero({ freeLessonSlug }: CourseHeroProps) {
             </span>
           </motion.div>
           <motion.h1 variants={itemVariants} className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-base mb-6 leading-tight">
-            Marketing não é sorte nem talento artístico. É um sistema que dá para aprender — e aplicar amanhã.
+            {title}
           </motion.h1>
           <motion.p variants={itemVariants} className="text-lg md:text-xl text-text mb-8 max-w-2xl text-justify">
-            7 módulos, 42 aulas: os frameworks de Kotler, Cialdini, Ogilvy e Christensen traduzidos em exercícios práticos. Do &quot;o que é marketing de verdade&quot; até o seu próprio plano de 90 dias.
+            7 módulos, 42 aulas: {text}
           </motion.p>
           <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4">
             <Link
-              href={`/cursos/marketing/aulas/${freeLessonSlug}`}
+              href={`/cursos/${course}/aulas/${freeLessonSlug}`}
               className="block w-full sm:w-auto text-center px-6 py-3.5 bg-accent-secondary text-base font-semibold rounded-lg hover:bg-accent-secondary/90 active:scale-95 transition-all"
             >
               Começar agora

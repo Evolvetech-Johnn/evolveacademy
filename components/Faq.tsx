@@ -5,30 +5,11 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { containerVariants, itemVariants } from '../animations/variants';
 import Section from './Section';
 
-const faqItems = [
-  {
-    question: 'Eu não tenho nenhuma experiência com marketing. Consigo acompanhar?',
-    answer:
-      'Sim. O Módulo 1 parte do zero conceitual — o que é marketing, os 4 Ps, segmentação — antes de qualquer aula tática. A sequência dos 7 módulos foi desenhada para quem nunca formalizou o que já faz no instinto.',
-  },
-  {
-    question: 'Isso serve para o meu tipo de negócio, ou é só para e-commerce/SaaS?',
-    answer:
-      'Os exemplos e contraexemplos cobrem categorias variadas — varejo, serviço local, B2B, infoproduto, franquia. O método se aplica a qualquer PME; os exercícios pedem que você aplique com os dados do seu próprio negócio.',
-  },
-  {
-    question: 'Quanto tempo tenho acesso ao curso?',
-    answer:
-      'Acesso vitalício. Você estuda no seu ritmo e pode voltar a qualquer módulo sempre que precisar revisar um conceito antes de uma campanha real.',
-  },
-  {
-    question: 'Preciso criar conta ou pagar para acessar?',
-    answer:
-      'Não. O curso está em fase inicial de testes: todas as aulas estão abertas, sem login e sem custo.',
-  },
-];
+interface FaqProps {
+  items: { question: string; answer: string }[];
+}
 
-export default function Faq() {
+export default function Faq({ items: faqItems }: FaqProps) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (

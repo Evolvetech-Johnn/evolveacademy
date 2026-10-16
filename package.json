@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "seed:course": "npx tsx scripts/seedCourseMarketing.ts"
+    "seed:course": "npx tsx scripts/seedCourses.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.45.4",

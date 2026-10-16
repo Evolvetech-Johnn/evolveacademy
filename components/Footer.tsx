@@ -19,13 +19,14 @@ export default function Footer() {
             <h4 className="text-2xl font-bold mb-4">Evolveacademy</h4>
             <p className="text-gray-400 max-w-sm text-justify">
               A plataforma de cursos online da EvolveTech Solutions — conhecimento prático para quem
-              toca marketing, vendas e crescimento no dia a dia.
+              toca marketing, web design e crescimento no dia a dia.
             </p>
           </motion.div>
           <motion.div variants={itemVariants}>
             <h5 className="font-semibold mb-4">Cursos</h5>
             <ul className="space-y-2 text-gray-400">
               <li><Link href="/cursos/marketing" className="hover:text-white transition-colors">Marketing do Zero ao Avançado</Link></li>
+              <li><Link href="/cursos/webdesign" className="hover:text-white transition-colors">Web Design do Zero ao Avançado</Link></li>
             </ul>
           </motion.div>
           <motion.div variants={itemVariants}>

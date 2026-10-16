@@ -3,11 +3,12 @@ import Link from 'next/link';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { getLessonBySlug, getLessonNavigation } from '@/lib/courses';
+import { COURSE_CONTENT } from '@/lib/courseContent';
 
 export const dynamic = 'force-dynamic';
 
 interface LessonPageProps {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ course: string; slug: string }>;
 }
 
 const contentFields: { key: keyof NonNullable<Awaited<ReturnType<typeof getLessonBySlug>>>; label: string }[] = [
@@ -25,17 +26,18 @@ const contentFields: { key: keyof NonNullable<Awaited<ReturnType<typeof getLesso
 // login/matrícula — reativar o gate (lib/courses.ts tem ensureEnrollment/
 // hasActiveEnrollment prontos) quando o curso passar a ser pago.
 export default async function LessonPage({ params }: LessonPageProps) {
-  const { slug } = await params;
+  const { course, slug } = await params;
+  if (!COURSE_CONTENT[course]) notFound();
   const lesson = await getLessonBySlug(slug);
-  if (!lesson) notFound();
+  if (!lesson || !slug.startsWith(`${course}-`)) notFound();
 
-  const { prev, next, progress } = await getLessonNavigation('marketing', slug);
+  const { prev, next, progress } = await getLessonNavigation(course, slug);
 
   return (
     <div className="min-h-screen bg-surface">
       <Header />
       <main className="max-w-3xl mx-auto px-4 sm:px-6 md:px-12 py-8 sm:py-16">
-        <Link href="/cursos/marketing" className="text-accent-secondary font-medium hover:underline">
+        <Link href={`/cursos/${course}`} className="text-accent-secondary font-medium hover:underline">
           ← Voltar para o curso
         </Link>
 
@@ -73,7 +75,7 @@ export default async function LessonPage({ params }: LessonPageProps) {
         <div className="mt-10 sm:mt-12 pt-6 border-t border-gray-100 flex flex-col sm:flex-row gap-3 sm:gap-4">
           {prev ? (
             <Link
-              href={`/cursos/marketing/aulas/${prev.slug}`}
+              href={`/cursos/${course}/aulas/${prev.slug}`}
               className="flex-1 px-5 py-3.5 rounded-lg border border-gray-200 hover:border-gray-300 transition-colors"
             >
               <span className="block text-xs text-text mb-1">← Aula anterior</span>
@@ -81,7 +83,7 @@ export default async function LessonPage({ params }: LessonPageProps) {
             </Link>
           ) : (
             <Link
-              href="/cursos/marketing"
+              href={`/cursos/${course}`}
               className="flex-1 px-5 py-3.5 rounded-lg border border-gray-200 hover:border-gray-300 transition-colors"
             >
               <span className="block text-xs text-text mb-1">←</span>
@@ -90,7 +92,7 @@ export default async function LessonPage({ params }: LessonPageProps) {
           )}
           {next && (
             <Link
-              href={`/cursos/marketing/aulas/${next.slug}`}
+              href={`/cursos/${course}/aulas/${next.slug}`}
               className="flex-1 px-5 py-3.5 rounded-lg bg-accent-secondary/10 border border-accent-secondary/20 hover:bg-accent-secondary/15 transition-colors text-right"
             >
               <span className="block text-xs text-accent-secondary mb-1">Próxima aula →</span>

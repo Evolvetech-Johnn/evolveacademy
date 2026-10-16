@@ -27,15 +27,9 @@ export default function Hero() {
             Cursos práticos, direto ao ponto, criados pela EvolveTech Solutions para quem quer resultado — não teoria solta.
           </motion.p>
           <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4">
-            <Link
-              href="/cursos/marketing"
-              className="block w-full sm:w-auto text-center px-6 py-3.5 bg-accent-primary text-white font-semibold rounded-lg hover:bg-accent-primary/90 active:scale-95 transition-all"
-            >
-              Ver curso de Marketing
-            </Link>
             <a
               href="#cursos"
-              className="block w-full sm:w-auto text-center px-6 py-3.5 bg-transparent border border-gray-200 text-text font-semibold rounded-lg hover:border-gray-300 active:scale-95 transition-all"
+              className="block w-full sm:w-auto text-center px-6 py-3.5 bg-accent-primary text-white font-semibold rounded-lg hover:bg-accent-primary/90 active:scale-95 transition-all"
             >
               Ver todos os cursos
             </a>

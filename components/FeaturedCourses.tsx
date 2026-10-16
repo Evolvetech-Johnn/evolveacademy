@@ -18,7 +18,7 @@ export default function FeaturedCourses({ courses }: FeaturedCoursesProps) {
       {courses.length === 0 ? (
         <p className="text-text">Novos cursos em breve.</p>
       ) : (
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-2 gap-6">
           {courses.map((course) => (
             <div key={course.slug} className="p-6 border border-gray-100 rounded-xl bg-surface flex flex-col">
               <h3 className="text-xl font-semibold text-base mb-2">{course.title}</h3>
