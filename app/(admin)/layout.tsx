@@ -37,23 +37,23 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="flex h-screen">
-        <aside className="w-64 bg-surface border-r border-gray-100 flex flex-col">
-          <div className="p-6 border-b border-gray-100">
+      <div className="flex flex-col md:flex-row md:h-screen">
+        <aside className="w-full md:w-64 bg-surface border-b md:border-b-0 md:border-r border-gray-100 flex flex-col">
+          <div className="p-4 md:p-6 border-b border-gray-100">
             <div className="flex items-center gap-3">
               <Image src="/logo.png" alt="Evolveacademy" width={40} height={40} className="rounded-xl" priority />
               <span className="font-bold text-xl text-base">Evolveacademy</span>
             </div>
           </div>
 
-          <nav className="flex-1 p-4 space-y-1">
+          <nav className="flex-1 p-2 md:p-4 flex md:flex-col gap-1 overflow-x-auto">
             {navItems.map((item) => {
               const isActive = pathname === item.href || pathname.startsWith(`${item.href}/`);
               return (
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
+                  className={`flex items-center gap-2 md:gap-3 px-3 md:px-4 py-2.5 md:py-3 rounded-lg whitespace-nowrap text-sm md:text-base transition-colors ${
                     isActive
                       ? 'bg-accent-primary/10 text-accent-primary font-medium'
                       : 'text-text hover:bg-gray-50'
@@ -67,8 +67,8 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
           </nav>
         </aside>
 
-        <main className="flex-1 overflow-auto">
-          <div className="p-8">{children}</div>
+        <main className="flex-1 min-w-0 md:overflow-auto">
+          <div className="p-4 sm:p-6 md:p-8">{children}</div>
         </main>
       </div>
     </div>

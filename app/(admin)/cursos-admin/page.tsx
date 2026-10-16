@@ -24,7 +24,7 @@ export default async function CursosAdminPage() {
       ) : (
         <div className="space-y-6">
           {courses.map(({ course, modules }) => (
-            <div key={course.id} className="p-6 border border-gray-100 rounded-xl bg-surface">
+            <div key={course.id} className="p-4 sm:p-6 border border-gray-100 rounded-xl bg-surface">
               <h2 className="text-xl font-semibold text-base mb-1">{course.title}</h2>
               <p className="text-text mb-6">{course.description}</p>
 

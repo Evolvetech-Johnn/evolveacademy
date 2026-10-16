@@ -13,9 +13,9 @@ export default function Footer() {
           whileInView="visible"
           viewport={{ once: true }}
           variants={containerVariants}
-          className="grid md:grid-cols-4 gap-8 mb-12"
+          className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-12"
         >
-          <motion.div variants={itemVariants} className="md:col-span-2">
+          <motion.div variants={itemVariants} className="sm:col-span-2">
             <h4 className="text-2xl font-bold mb-4">Evolveacademy</h4>
             <p className="text-gray-400 max-w-sm text-justify">
               A plataforma de cursos online da EvolveTech Solutions — conhecimento prático para quem
@@ -32,7 +32,7 @@ export default function Footer() {
           <motion.div variants={itemVariants}>
             <h5 className="font-semibold mb-4">Contato</h5>
             <ul className="space-y-2 text-gray-400">
-              <li>contato@evolvetechsolutions.com.br</li>
+              <li className="break-words">contato@evolvetechsolutions.com.br</li>
             </ul>
           </motion.div>
         </motion.div>
